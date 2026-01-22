@@ -17,12 +17,10 @@ The service is exposed at `localhost:8080`.
 ### Architecture Overview
 
 ![Architecture diagram](./images/architecture.svg)
-<img src="./images/architecture.svg">
 
 The Go web server is the API to the Postgres server for creating and updating code sessions, as well as enqueuing an execution task to the Redis server's message queue. The Go consumer can then poll the tasks in the Redis message for execution, logging the status of the execution into the Postgres server as it goes. Interactions with Redis's task queue and task-worker concurrency are done with the Go library [Asynq](https://github.com/hibiken/asynq). Below is a sequence diagram of the service:
 
 ![Sequence diagram of the service](./images/sequence-diagram.svg)
-<img src="./images/sequence-diagram.svg">
 
 ### Reliability & Data Model
 
