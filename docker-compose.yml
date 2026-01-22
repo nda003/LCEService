@@ -1,0 +1,48 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./cmd/api/Dockerfile
+    env_file: .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: [ "sh", "-c", "/edtronautinterview/bin/migrate up && /edtronautinterview/bin/api" ]
+
+  consumer:
+    build: 
+      context: .
+      dockerfile: ./cmd/consumer/Dockerfile
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    command: [ "sh", "-c", "/edtronautinterview/bin/consumer" ]
+
+  postgres:
+    image: postgres:18.1-alpine
+    environment:
+      - POSTGRES_DB=edn_db
+      - POSTGRES_USER=edn_user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U edn_user -d edn_db" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    restart: always
+
