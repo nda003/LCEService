@@ -40,7 +40,7 @@ A potential bottleneck is the constant write operation done on the Postgres serv
 
 The architecture was designed with simplicity in mind for the purpose of quick prototyping and iterating. Postgres was chosen for its ecosystem and good documentation, and so was Redis. Go was selected as the programming language for its simplicity without sacrificing performance.
 
-Production-readiness lacks a foundation for horizontal scaling such as a sophisticated orchestration and scaling configuration. Executions are not run in an isolated environment and thus vulnerable to malicious actors and adversaries. The service currently only supports Python and Go.
+Production-readiness lacks a foundation for horizontal scaling such as a sophisticated orchestration and scaling configuration. Executions are not run in an isolated environment and thus vulnerable to malicious actors and adversaries. The service currently only supports Python and Go. This service has no automatic unit testing and relies on manual testing.
 
 ## API documentation
 
@@ -119,4 +119,4 @@ Retrieve execution status and result.
 
 ## Improvements
 
-With more time, I would implement the containerized Docker environment system with gVisor for isolated and safe code execution. I would also configure Redis and Postgres for prototyping future horizontal scaling and orchestration, and maybe switch from Postgres to Cassandra for faster and more effiecent logging.
+With more time, I would implement the containerized Docker environment system with gVisor for isolated and safe code execution. I would also configure Redis and Postgres for prototyping future horizontal scaling and orchestration, and maybe switch from Postgres to Cassandra for faster and more efficient logging. Adding unit tests would help.
